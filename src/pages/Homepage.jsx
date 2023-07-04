@@ -50,16 +50,21 @@ const HomePage = () => {
 
   return (
     <Stack minH={"100vh"}
+      // backgroundImage='url("https://www.lincoln.ac.uk/course/illillub/")'
+      backgroundPosition="center"
+      backgroundRepeat="no-repeat"
       // align={"center"}
       // justify={"center"}
-      bg={useColorModeValue("gray.50", "gray.800")}>
-      <Stack spacing={8} mx={"auto"} flexBasis={1} py={12} px={1}>
-        <Heading px={3} as="h1" mb={4} fontSize={['2xl', '4xl']}>
+
+      bg={useColorModeValue("gray.800", "gray.800")}
+    >
+      <Stack spacing={8} maxW={1000} mx={"auto"} flexBasis={1} py={12} px={1}>
+        <Heading position={'static'} color={useColorModeValue('white')} px={3} as="h1" mb={4} fontSize={['2xl', '4xl']} transition={'all .5s linear'}>
           Task List
         </Heading>
-        <Grid px={3} autoRows={'auto'} templateColumns={['repeat(1, fr)', 'repeat(2, 200px)', 'repeat(3, 1fr)']} overflow={'scroll'} gap={3}>
+        <Grid transition={'all .5s linear'} px={3} autoRows={'auto'} templateColumns={['repeat(1, fr)', 'repeat(2, 200px)', 'repeat(3, 1fr)']} overflow={'scroll'} gap={3}>
           {tasks.length > 0 ? (
-            tasks.map((task, index) => (
+            [...tasks, ...tasks, ...tasks].map((task, index) => (
               <TaskCard onClick={onOpen} key={index} task={task} />
             ))
           ) : (
@@ -67,8 +72,9 @@ const HomePage = () => {
           )}
         </Grid>
       </Stack>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
+      <Modal isOpen={isOpen} onClose={onClose} isCentered >
+        <ModalOverlay backdropFilter="blur(8px)"   // Apply the blur effect to the overlay
+          bg="rgba(0, 0, 0, 0.5)" />
         <ModalContent>
           <ModalHeader>Modal Title</ModalHeader>
           <ModalCloseButton />
@@ -85,7 +91,7 @@ const HomePage = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </Stack>
+    </Stack >
   );
 };
 
