@@ -20,15 +20,15 @@ export default function TaskCard(props) {
         <Divider />
         <Text mb={2} color={'gray.500'} fontFamily={'Roboto'}>{props.task.description.slice(0, 50)}...</Text>
         <HStack flexShrink={1} flexWrap={'wrap'} alignItems={'start'} justify={'start'}>
-          <Badge colorScheme='cyan' >
+          <Badge colorScheme='cyan' fontFamily={'mono'} >
             <span>Due Date:</span> {props.task.dueDate}
           </Badge>
 
-          <Badge>
+          <Badge fontFamily={'mono'}>
             {props.task.status}
           </Badge>
 
-          <Badge>
+          <Badge fontFamily={'mono'}>
             {props.task.assignedUser}
           </Badge>
         </HStack>

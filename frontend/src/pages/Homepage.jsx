@@ -72,8 +72,8 @@ const HomePage = () => {
     >
       <Stack position={'relative'} spacing={8} maxW={1000} mx={"auto"} flexBasis={1} py={12} px={1}>
         <HStack wrap={'wrap'} rowGap={5} alignItems={'center'} justifyContent={'space-between'} px={3}>
-          <Heading position={'static'} color={useColorModeValue('white')} as="h1" fontSize={['2xl', '4xl']} transition={'all .5s linear'}>
-            Task List
+          <Heading fontFamily={'Space Mono'} fontWeight={'black'} position={'static'} color={'white'} as="h1" fontSize={['2xl', '4xl']} transition={'all .5s linear'}>
+            Tasks
           </Heading>
           <HStack gap={10}>
             <HStack as={'button'} alignItems={'center'} >
