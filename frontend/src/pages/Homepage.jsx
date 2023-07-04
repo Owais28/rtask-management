@@ -79,7 +79,7 @@ const HomePage = () => {
             <HStack as={'button'} alignItems={'center'} >
               <Avatar size={['xs', 'sm']} /> <Text color={'white'} fontSize={['sm', 'md']} >Owais Athar</Text>
             </HStack>
-            <Button colorScheme='yellow' size={['sm', 'md']}>
+            <Button colorScheme='yellow' size={['xs', 'md']}>
               Logout
             </Button>
           </HStack>
