@@ -13,7 +13,7 @@ export default function TaskCard(props) {
 
   return (
     <GridItem transition={'all .5s linear'} onClick={props.onClick} flex={1}>
-      <VStack alignItems={'start'} key={props.task.id} borderWidth="1px" flex={1} height={'100%'} _hover={{ cursor: "pointer" }} bgColor={'white'} flexBasis={1} borderRadius="md" p={4} mb={4}>
+      <VStack alignItems={'start'} transition={'all .5s linear'} key={props.task.id} borderWidth={2} flex={1} height={'100%'} _hover={{ cursor: "pointer", borderColor: 'orange', borderWidth: 2 }} bgColor={'white'} flexBasis={1} borderRadius="md" p={4} mb={4}>
         <Text fontFamily={'Roboto'} fontWeight={'semibold'} as="h4" fontSize={["md", "lg"]} >
           {props.task.title}
         </Text>

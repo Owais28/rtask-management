@@ -48,6 +48,17 @@ const HomePage = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { isOpenNewTask, onOpenNewTask, onCloseNewTask } = useDisclosure()
+  const [isUpdateModal, setIsUpdateModal] = useState(true)
+
+  const handleUpdateModal = (e) => {
+    setIsUpdateModal(true)
+    onOpen()
+  }
+
+  const handleCreateModal = (e) => {
+    setIsUpdateModal(false)
+    onOpen()
+  }
 
   return (
     <Stack minH={"100vh"}
@@ -66,20 +77,20 @@ const HomePage = () => {
         <Grid transition={'all .5s linear'} px={3} autoRows={'auto'} templateColumns={['repeat(1, fr)', 'repeat(2, 200px)', 'repeat(3, 1fr)']} overflow={'scroll'} gap={3}>
           {tasks.length > 0 ? (
             [...tasks, ...tasks, ...tasks].map((task, index) => (
-              <TaskCard onClick={onOpen} key={index} task={task} />
+              <TaskCard onClick={handleUpdateModal} key={index} task={task} />
             ))
           ) : (
             <Text>No tasks found.</Text>
           )}
         </Grid>
-        <Button colorScheme='orange' position={'fixed'} onClick={onOpenNewTask} bottom={10} right={10} as='button' maxWidth={1000} mx={"auto"} >
+        <Button colorScheme='orange' position={'fixed'} onClick={handleCreateModal} bottom={10} right={10} maxWidth={1000} mx={"auto"} >
           <Text fontSize={'xl'} >
             Create +
           </Text>
         </Button>
       </Stack>
 
-      <Modal isOpen={isOpenNewTask} onClose={onCloseNewTask} isCentered >
+      {/* <Modal isOpen={isOpenNewTask} onClose={onCloseNewTask} isCentered >
         <ModalOverlay backdropFilter="blur(8px)"   // Apply the blur effect to the overlay
           bg="rgba(0, 0, 0, 0.5)" />
         <ModalContent width={['90vw']}>
@@ -117,7 +128,7 @@ const HomePage = () => {
                 </Select>
               </HStack>
               {/* <Lorem count={2} /> */}
-              <Stack>
+      {/* <Stack>
                 <Text>
                   Description
                 </Text>
@@ -134,63 +145,68 @@ const HomePage = () => {
             <Button variant='outline' colorScheme='red'>Delete</Button>
           </ModalFooter>
         </ModalContent>
-      </Modal>
+      </Modal> */}
 
       {/* Edit Modal */}
       <Modal isOpen={isOpen} onClose={onClose} isCentered >
         <ModalOverlay backdropFilter="blur(8px)"   // Apply the blur effect to the overlay
           bg="rgba(0, 0, 0, 0.5)" />
         <ModalContent width={['90vw']}>
-          <ModalHeader fontFamily={'Roboto'} fontSize={['lg', 'xl']}>Task 1</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody fontFamily={'Roboto'} fontSize={['md', 'lg']} height={'max-content'}>
-            <Stack>
-              <HStack gap={10}>
-                <Text width={'25%'}>
-                  Status
-                </Text>
-                <Select placeholder='Select option' defaultValue={'TO-DO'}>
-                  <option value='TO-DO'>
-                    TO-DO
+          {isUpdateModal ? (
+            <>
+              <ModalHeader fontFamily={'Roboto'} fontSize={['lg', 'xl']}>Task 1</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody fontFamily={'Roboto'} fontSize={['md', 'lg']} height={'max-content'}>
+                <Stack>
+                  <HStack gap={10}>
+                    <Text width={'25%'}>
+                      Status
+                    </Text>
+                    <Select placeholder='Select option' defaultValue={'TO-DO'}>
+                      <option value='TO-DO'>
+                        TO-DO
 
-                  </option>
-                  <option value='IN-PROGRESS'>IN-PROGRESS</option>
-                  <option value='DONE'>DONE</option>
-                </Select>
-              </HStack>
-              <HStack gap={10}>
-                <Text width={'25%'}>
-                  Due date
-                </Text>
-                <Input type='date' placeholder='due date' />
-              </HStack>
-              <HStack gap={10}>
-                <Text width={'25%'}>
-                  Assignee
-                </Text>
-                <Select placeholder='Select option' fill>
-                  <option value='option1'>Option 1</option>
-                  <option value='option2'>Option 2</option>
-                  <option value='option3'>Option 3</option>
-                </Select>
-              </HStack>
-              {/* <Lorem count={2} /> */}
-              <Stack>
-                <Text>
-                  Description
-                </Text>
-                <Textarea bgColor={'gray.100'} />
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugit repellendus cum voluptas ipsam vitae illo cumque nihil, accusamus maiores, dolorum eum nostrum ut id deserunt tempore, nemo esse rem nam.
-              </Stack>
-            </Stack>
-          </ModalBody>
+                      </option>
+                      <option value='IN-PROGRESS'>IN-PROGRESS</option>
+                      <option value='DONE'>DONE</option>
+                    </Select>
+                  </HStack>
+                  <HStack gap={10}>
+                    <Text width={'25%'}>
+                      Due date
+                    </Text>
+                    <Input type='date' placeholder='due date' />
+                  </HStack>
+                  <HStack gap={10}>
+                    <Text width={'25%'}>
+                      Assignee
+                    </Text>
+                    <Select placeholder='Select option' fill>
+                      <option value='option1'>Option 1</option>
+                      <option value='option2'>Option 2</option>
+                      <option value='option3'>Option 3</option>
+                    </Select>
+                  </HStack>
+                  {/* <Lorem count={2} /> */}
+                  <Stack>
+                    <Text>
+                      Description
+                    </Text>
+                    <Textarea bgColor={'gray.100'} />
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugit repellendus cum voluptas ipsam vitae illo cumque nihil, accusamus maiores, dolorum eum nostrum ut id deserunt tempore, nemo esse rem nam.
+                  </Stack>
+                </Stack>
+              </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
-              Update
-            </Button>
-            <Button variant='outline' colorScheme='red'>Delete</Button>
-          </ModalFooter>
+              <ModalFooter>
+                <Button colorScheme='blue' mr={3} onClick={onClose}>
+                  Update
+                </Button>
+                <Button variant='outline' colorScheme='red'>Delete</Button>
+              </ModalFooter>
+            </>
+          ) : (<Text>sds</Text>)
+          }
         </ModalContent>
       </Modal>
     </Stack >
