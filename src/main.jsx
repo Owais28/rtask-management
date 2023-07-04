@@ -7,7 +7,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { ChakraProvider } from "@chakra-ui/react";
-
+import './index.css'
 const router = createBrowserRouter([
   {
     path: "/",
