@@ -1,6 +1,7 @@
 import { Badge, Box, Divider, GridItem, HStack, Heading, Text, VStack } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
-
+import { AiOutlineClockCircle } from 'react-icons/ai'
+import { GoPerson } from 'react-icons/go'
 export default function TaskCard(props) {
 
   // const handleDeleteTask = (e) => {
@@ -31,14 +32,24 @@ export default function TaskCard(props) {
         <Divider />
         <Text mb={2} color={'gray.500'} fontFamily={'Roboto'}>{props.task.description.slice(0, 50)}...</Text>
         <HStack flexShrink={1} flexWrap={'wrap'} alignItems={'start'} justify={'start'}>
-          <Badge colorScheme='cyan' fontFamily={'mono'} >
-            <span>Due Date:</span> {props.task.dueDate}
+          {StatusBadge}
+          <Badge alignItems={'center'} colorScheme='cyan' fontFamily={'mono'} >
+            <HStack alignItems={'center'}>
+              <AiOutlineClockCircle style={{ display: 'inline-block' }} />
+              <Text>
+                {props.task.dueDate}
+              </Text>
+            </HStack>
           </Badge>
 
-          {StatusBadge}
 
           <Badge fontFamily={'mono'}>
-            {props.task.assignedUser}
+            <HStack alignItems={'center'}>
+              <GoPerson style={{ display: 'inline-block' }} />
+              <Text>
+                {props.task.assignedUser}
+              </Text>
+            </HStack>
           </Badge>
         </HStack>
         {/* <Button colorScheme="red" mt={2} onClick={() => handleDeleteTask(props.task.id)}>

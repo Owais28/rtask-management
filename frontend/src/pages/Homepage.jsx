@@ -320,9 +320,9 @@ const HomePage = () => {
 
             <ModalFooter>
               <Button colorScheme='blue' mr={3} onClick={onClose}>
-                Update
+                Add
               </Button>
-              <Button variant='outline' colorScheme='red'>Delete</Button>
+              <Button variant='outline' colorScheme='gray' onClick={onClose}>Cancel</Button>
             </ModalFooter>
           </>)
           }
