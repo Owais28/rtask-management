@@ -11,6 +11,17 @@ export default function TaskCard(props) {
   //   console.log("Updated")
   // }
 
+  let StatusBadge
+  if (props.task.status === "TODO") StatusBadge = <Badge fontFamily={'mono'} colorScheme={'purple'}>
+    {props.task.status}
+  </Badge>
+  else if (props.task.status === "IN_PROGRESS") StatusBadge = <Badge fontFamily={'mono'} colorScheme={'orange'}>
+    {props.task.status}
+  </Badge>
+  else StatusBadge = <Badge fontFamily={'mono'} colorScheme={'green'}>
+    {props.task.status}
+  </Badge>
+
   return (
     <GridItem transition={'all .5s linear'} onClick={props.onClick} flex={1}>
       <VStack alignItems={'start'} transition={'all .5s linear'} key={props.task.id} borderWidth={2} flex={1} height={'100%'} _hover={{ cursor: "pointer", borderColor: 'orange', borderWidth: 2 }} bgColor={'white'} flexBasis={1} borderRadius="md" p={4} mb={4}>
@@ -24,9 +35,7 @@ export default function TaskCard(props) {
             <span>Due Date:</span> {props.task.dueDate}
           </Badge>
 
-          <Badge fontFamily={'mono'}>
-            {props.task.status}
-          </Badge>
+          {StatusBadge}
 
           <Badge fontFamily={'mono'}>
             {props.task.assignedUser}

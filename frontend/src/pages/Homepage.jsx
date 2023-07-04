@@ -9,7 +9,7 @@ const HomePage = () => {
       "title": "Task 1",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "dueDate": "2023-07-10",
-      "status": "In Progress",
+      "status": "IN_PROGRESS",
       "assignedUser": "John Doe"
     },
     {
@@ -17,7 +17,7 @@ const HomePage = () => {
       "title": "Task 2",
       "description": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "dueDate": "2023-07-12",
-      "status": "Completed",
+      "status": "DONE",
       "assignedUser": "Jane Smith"
     },
     {
@@ -25,7 +25,7 @@ const HomePage = () => {
       "title": "Task 3",
       "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
       "dueDate": "2023-07-15",
-      "status": "Pending",
+      "status": "TODO",
       "assignedUser": "Michael Johnson"
     }
   ]
