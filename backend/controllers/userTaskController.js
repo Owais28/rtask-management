@@ -2,8 +2,9 @@ const Task = require('../models/task');
 
 // Get all tasks
 exports.getAllTasks = async (req, res) => {
+  const { _id } = req.user
   try {
-    const tasks = await Task.find();
+    const tasks = await Task.findByAssignee([_id])
     res.status(200).json(tasks);
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve tasks' });
@@ -44,6 +45,7 @@ exports.createTask = async (req, res) => {
 exports.updateTask = async (req, res) => {
   const { taskId } = req.params;
   const { title, description, dueDate, assignedUser } = req.body;
+
   try {
     const task = await Task.findByIdAndUpdate(
       taskId,
@@ -72,3 +74,13 @@ exports.deleteTask = async (req, res) => {
     res.status(500).json({ error: 'Failed to delete task' });
   }
 };
+
+
+// apis for users
+// users can access their tasks only
+
+// apis for admin
+// Admin can
+// - view all tasks
+// - update them
+// 

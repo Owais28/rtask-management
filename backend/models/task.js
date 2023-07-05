@@ -11,7 +11,7 @@ const TaskSchema = new mongoose.Schema({
   },
   dueDate: {
     type: Date,
-    required: true
+    default: Date.now()
   },
   assignedUsers: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -23,6 +23,42 @@ const TaskSchema = new mongoose.Schema({
     default: 'todo'
   }
 });
+
+// Static method to find tasks based on assignees
+TaskSchema.statics.findByAssignee = function (assigneeIds) {
+  return this.find({ assignees: { $in: assigneeIds } }).exec();
+};
+
+
+// Static method to find tasks based on status
+TaskSchema.statics.findByStatus = function (status) {
+  return this.find({ status: status }).exec();
+};
+
+
+// Static method to find tasks based on due date
+TaskSchema.statics.findByDueDate = function (dueDate) {
+  return this.find({ dueDate: dueDate }).exec();
+};
+
+// Instance method to check if the user is assigned to the task
+TaskSchema.methods.isUserAssigned = function (userId) {
+  return this.assignedUsers.some(user => user.toString() === userId.toString());
+};
+
+// Instance method to update the task if the user is assigned
+TaskSchema.methods.updateTask = async function (title, description, dueDate, status, userId) {
+  if (!this.isUserAssigned(userId)) {
+    throw new Error('You are not authorized to update this task.');
+  }
+
+  this.title = title;
+  this.description = description;
+  this.dueDate = dueDate;
+  this.status = status;
+
+  return this.save();
+};
 
 const Task = mongoose.model('Task', TaskSchema);
 

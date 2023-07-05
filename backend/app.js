@@ -61,10 +61,15 @@ app.use('/register', require('./routes/register'))
 
 app.use(verifyJWT);
 app.use('/tasks', (req, res) => {
-
   res.json({ "Success": { userId: req.userId, role: req.role } })
-}
-)                      // all tasks
+})
+
+app.use('/user', require('./routes/users'))
+
+const verifyAdmin = require('./middleware/verifyAdmin')
+
+app.use('/admin/tasks', verifyAdmin, require('./routes/api/admin'))
+// all tasks
 // app.use('/tasks/:taskId')         // get a specific task
 // app.use('/tasks/:taskId/edit')    // update a task
 // app.use('/tasks/:taskId/delete')  // delete a task

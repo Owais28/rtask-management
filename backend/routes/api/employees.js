@@ -13,4 +13,17 @@ router.route('/')
 router.route('/:id')
     .get(employeesController.getEmployee);
 
+
+router.route('/:id/delete')
+    .put()
+
+router.route('/:id/update')
+    .put()
+
+router.route('/')
+// app.use('/tasks/:taskId')         // get a specific task
+
+// app.use('/tasks/:taskId/edit')    // update a task
+// app.use('/tasks/:taskId/delete')  // delete a task
+// app.use('/admin/dashboard')
 module.exports = router;

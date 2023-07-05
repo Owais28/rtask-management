@@ -31,13 +31,23 @@ const handleNewUser = async (req, res) => {
 
   try {
 
-    //store the new user
+    if (req.body.role) {
+      //store the new user
+      const newUser = {
+        "username": username,
+        "name": name,
+        "email": email,
+        "password": password,
+        "role": req.body.role
+      };
+    }
+
     const newUser = {
       "username": username,
       "name": name,
       "email": email,
-      "password": password
-    };
+      "password": password,
+    }
 
     // save user
     const newUserCreated = await createUser(newUser)
