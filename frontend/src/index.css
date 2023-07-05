@@ -11,3 +11,13 @@
 body {
   font-family: "Roboto", sans-serif;
 }
+
+.tasks-grid::-webkit-scrollbar-track {
+  height: 1px;
+  width: 1px;
+}
+
+.tasks-grid::-webkit-scrollbar-thumb {
+  height: 1px;
+  width: 1px;
+}

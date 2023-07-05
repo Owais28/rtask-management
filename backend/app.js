@@ -1,41 +1,89 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const app = express();
+const path = require('path');
+const cors = require('cors');
+const corsOptions = require('./config/corsOptions');
+// const { logger } = require('./middleware/logEvents');
+const errorHandler = require('./middleware/errorHandler');
+const verifyJWT = require('./middleware/verifyJWT');
+const cookieParser = require('cookie-parser');
+const credentials = require('./middleware/credentials');
+const PORT = process.env.PORT || 3500;
+const morgan = require('morgan')
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// custom middleware logger
+app.use(morgan("combined", {}));
 
-var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+var mongoose = require('mongoose');
 
-app.use(logger('dev'));
-app.use(express.json());
+mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
+  console.log('Connected to MongoDB Atlas');
+  // Start your server or perform any other operations
+})
+  .catch((error) => {
+    console.error('Error connecting to MongoDB Atlas:', error);
+  });
+
+//Get the default connection
+// var db = mongoose.connection;
+//Bind connection to error event (to get notification of connection errors)
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+// Handle options credentials check - before CORS!
+// and fetch cookies credentials requirement
+// app.use(credentials);
+
+// Cross Origin Resource Sharing
+app.use(cors(corsOptions));
+
+// built-in middleware to handle urlencoded form data
 app.use(express.urlencoded({ extended: false }));
+
+// built-in middleware for json 
+app.use(express.json());
+
+//middleware for cookies
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+//serve static files
+app.use('/', express.static(path.join(__dirname, '/public')));
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+// routes
+// app.use('/', require('./routes/root'));
+// app.use('/register', require('./routes/register'));
+// app.use('/auth', require('./routes/auth'));
+// app.use('/refresh', require('./routes/refresh'));
+// app.use('/logout', require('./routes/logout'));
+
+app.use('/login', require('./routes/auth'))
+app.use('/register', require('./routes/register'))
+
+app.use(verifyJWT);
+app.use('/tasks', (req, res) => {
+
+  res.json({ "Success": { userId: req.userId, role: req.role } })
+}
+)                      // all tasks
+// app.use('/tasks/:taskId')         // get a specific task
+// app.use('/tasks/:taskId/edit')    // update a task
+// app.use('/tasks/:taskId/delete')  // delete a task
+// app.use('/admin/dashboard')  // delete a task
+
+// app.use('/employees', require('./routes/api/employees'));
+
+
+app.all('*', (req, res) => {
+  res.status(404);
+  if (req.accepts('html')) {
+    res.sendFile(path.join(__dirname, 'views', '404.html'));
+  } else if (req.accepts('json')) {
+    res.json({ "error": "404 Not Found" });
+  } else {
+    res.type('txt').send("404 Not Found");
+  }
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(errorHandler);
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-module.exports = app;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

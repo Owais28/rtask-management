@@ -86,7 +86,7 @@ const HomePage = () => {
             </Button>
           </HStack>
         </HStack>
-        <Grid transition={'all .5s linear'} px={3} autoRows={'auto'} templateColumns={['repeat(1, fr)', 'repeat(2, 200px)', 'repeat(3, 1fr)']} overflow={'scroll'} gap={3}>
+        <Grid className='tasks-grid' transition={'all .5s linear'} px={3} autoRows={'auto'} templateColumns={['repeat(1, fr)', 'repeat(2, 200px)', 'repeat(3, 1fr)']} overflow={'scroll'} gap={3}>
           {tasks.length > 0 ? (
             [...tasks, ...tasks, ...tasks].map((task, index) => (
               <TaskCard onClick={handleUpdateModal} key={index} task={task} />

@@ -1,4 +1,4 @@
-import { Badge, Box, Divider, GridItem, HStack, Heading, Text, VStack } from '@chakra-ui/react'
+import { Badge, Divider, GridItem, HStack, Text, VStack } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { GoPerson } from 'react-icons/go'
