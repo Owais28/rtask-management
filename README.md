@@ -29,5 +29,3 @@ Here's a general outline of the workflow based on different roles:
    - Routes are defined and organized based on functionality (e.g., user routes, admin routes, task routes).
    - Middleware functions are applied to protect routes based on user roles.
    - Middleware functions validate the user's role and permissions before allowing access to specific routes.
-
-The above workflow is a general outline and can be customized based on your specific application requirements. It's important to design and implement the workflow with security and usability in mind, ensuring that each user role has the appropriate level of access and functionality.
