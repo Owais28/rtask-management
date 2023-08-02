@@ -2,7 +2,7 @@ const Task = require('../models/task');
 
 // Get all tasks
 exports.getAllTasks = async (req, res) => {
-  const { _id } = req.user
+  const { _id } = req.userId
   try {
     const tasks = await Task.findByAssignee([_id])
     res.status(200).json(tasks);
@@ -43,14 +43,14 @@ exports.createTask = async (req, res) => {
 
 // Update an existing task
 exports.updateTask = async (req, res) => {
-  const { taskId } = req.params;
-  const { title, description, dueDate, assignedUser } = req.body;
+  const { id } = req.params;
+  const { title, description, dueDate, assignedUsers, status } = req.body;
 
   try {
     const task = await Task.findByIdAndUpdate(
-      taskId,
-      { title, description, dueDate, assignedUser },
-      { new: true }
+      id,
+      { title, description, dueDate, assignedUsers, status },
+      { new: false }
     );
     if (!task) {
       return res.status(404).json({ error: 'Task not found' });
@@ -63,9 +63,9 @@ exports.updateTask = async (req, res) => {
 
 // Delete a task
 exports.deleteTask = async (req, res) => {
-  const { taskId } = req.params;
+  const { id } = req.params;
   try {
-    const task = await Task.findByIdAndDelete(taskId);
+    const task = await Task.findByIdAndDelete(id);
     if (!task) {
       return res.status(404).json({ error: 'Task not found' });
     }

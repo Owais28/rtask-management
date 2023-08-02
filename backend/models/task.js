@@ -47,7 +47,7 @@ TaskSchema.methods.isUserAssigned = function (userId) {
 };
 
 // Instance method to update the task if the user is assigned
-TaskSchema.methods.updateTask = async function (title, description, dueDate, status, userId) {
+TaskSchema.methods.updateTask = async function (title, description, dueDate, status, assignedUsers, userId) {
   if (!this.isUserAssigned(userId)) {
     throw new Error('You are not authorized to update this task.');
   }
@@ -56,6 +56,7 @@ TaskSchema.methods.updateTask = async function (title, description, dueDate, sta
   this.description = description;
   this.dueDate = dueDate;
   this.status = status;
+  this.assignedUsers = assignedUsers;
 
   return this.save();
 };

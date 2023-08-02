@@ -10,20 +10,14 @@ const cookieParser = require('cookie-parser');
 const credentials = require('./middleware/credentials');
 const PORT = process.env.PORT || 3500;
 const morgan = require('morgan')
+const verifyAdmin = require('./middleware/verifyAdmin');
+const { connectDB } = require('./utils/db');
+// const { connectDB } = require('./utils/db')
+require('dotenv').config()
 
+connectDB()
 // custom middleware logger
 app.use(morgan("combined", {}));
-
-
-var mongoose = require('mongoose');
-
-mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
-  console.log('Connected to MongoDB Atlas');
-  // Start your server or perform any other operations
-})
-  .catch((error) => {
-    console.error('Error connecting to MongoDB Atlas:', error);
-  });
 
 //Get the default connection
 // var db = mongoose.connection;
@@ -60,13 +54,10 @@ app.use('/login', require('./routes/auth'))
 app.use('/register', require('./routes/register'))
 
 app.use(verifyJWT);
-app.use('/tasks', (req, res) => {
-  res.json({ "Success": { userId: req.userId, role: req.role } })
-})
+app.use('/tasks', require('./routes/api/tasks'))
 
 app.use('/user', require('./routes/users'))
 
-const verifyAdmin = require('./middleware/verifyAdmin')
 
 app.use('/admin/tasks', verifyAdmin, require('./routes/api/admin'))
 // all tasks
@@ -92,3 +83,5 @@ app.all('*', (req, res) => {
 app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+module.exports = app
